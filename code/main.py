@@ -1,5 +1,6 @@
 import telebot
 from telebot import types
+from get_info import GetInfo
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
 
@@ -10,6 +11,7 @@ def start(message):
     markup.row_width = 4
     btn = types.InlineKeyboardButton('Продолжить', callback_data="yes")
     markup.add(btn)
+
     send_mess = f"<b>Привет, {message.from_user.first_name}</b>!\nЯ могу предоставить всем желающим информацию о деятельности АУ «Технопарк высоких технологий»"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
@@ -20,6 +22,7 @@ def choise6(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
     with open('../texts/young_voter_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -31,6 +34,7 @@ def choise5(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
     with open('../texts/UMNIC_comprtition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -42,6 +46,7 @@ def choise4(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
     with open('../texts/accelerator_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -53,6 +58,7 @@ def choise3(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
     with open('../texts/residents_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -64,6 +70,8 @@ def choise2(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
+    GetInfo(2)
     with open('../texts/public_services.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -76,6 +84,8 @@ def choise1(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
+
+    GetInfo(1)
     with open('../texts/events.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
@@ -110,6 +120,7 @@ def about(message):
     btn5 = types.InlineKeyboardButton('Конкурс «УМНИК»', callback_data="choise5")
     btn6 = types.InlineKeyboardButton('Конкурс «Молодой изобретатель Югры»', callback_data="choise6")
     markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
+
     send_mess = f"Что Вас интересует?"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
