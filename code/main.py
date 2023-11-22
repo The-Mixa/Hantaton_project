@@ -2,6 +2,8 @@ import telebot
 from telebot import types
 from get_info import GetInfo
 
+#Мы все хорошо поработали, а Никита нет, он - лох
+
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
 
 
