@@ -70,6 +70,17 @@ def choise2(message):
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
 
+@bot.message_handler()
+def choise1(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    btn = types.InlineKeyboardButton('Назад', callback_data="yes")
+    markup.add(btn)
+    with open('../texts/events.txt', encoding='utf-8') as file:
+        send_mess = file.read()
+
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     if call.data == 'yes':
@@ -84,6 +95,8 @@ def callback_inline(call):
         choise3(call.message)
     elif call.data == 'choise2':
         choise2(call.message)
+    elif call.data == 'choise1':
+        choise1(call.message)
 
 
 @bot.message_handler(commands=['about'])
