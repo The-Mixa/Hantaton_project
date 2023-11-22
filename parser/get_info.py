@@ -30,12 +30,18 @@ class GetInfo:
                 f.write(event)
 
     def services(self):
+        services = ['']
         response = requests.get('https://www.tp86.ru/services/services/')
         soup = BeautifulSoup(response.text, 'html.parser')
         data = soup.findAll('a', class_='service-element bg-color-full-white')
 
         for el in data:
+            service = ''
             name_of_service = el.find('p', class_='font-myriad-pro-weight-400 text-color-black font-size-17').text.strip()
             service_info_url = el['href']
-            print(name_of_service)
-            print(f'https://www.tp86.ru{service_info_url}', end='\n\n')
+            service += name_of_service + '\n'
+            service += f'https://www.tp86.ru{service_info_url}\n\n'
+            services += service
+        with open('texts/services.txt', 'w', encoding='utf8') as f:
+            for service in services:
+                f.write(service)
