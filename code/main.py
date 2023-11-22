@@ -13,16 +13,18 @@ def start(message):
     send_mess = f"<b>Привет, {message.from_user.first_name}</b>!\nЯ могу предоставить всем желающим информацию о деятельности АУ «Технопарк высоких технологий»"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
-@bot.choise6(commands=['choise6'])
+
+@bot.message_handler()
 def choise6(message):
     markup = types.InlineKeyboardMarkup()
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
-    with open('/texts/young_voter_competition.txt', encoding='utf-8') as file:
+    with open('../texts/young_voter_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
