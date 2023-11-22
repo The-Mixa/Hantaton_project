@@ -25,6 +25,50 @@ def choise6(message):
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
+@bot.message_handler()
+def choise5(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    btn = types.InlineKeyboardButton('Назад', callback_data="yes")
+    markup.add(btn)
+    with open('../texts/UMNIC_comprtition.txt', encoding='utf-8') as file:
+        send_mess = file.read()
+
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
+@bot.message_handler()
+def choise4(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    btn = types.InlineKeyboardButton('Назад', callback_data="yes")
+    markup.add(btn)
+    with open('../texts/residents_competition.txt', encoding='utf-8') as file:
+        send_mess = file.read()
+
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
+@bot.message_handler()
+def choise3(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    btn = types.InlineKeyboardButton('Назад', callback_data="yes")
+    markup.add(btn)
+    with open('../texts/public_services.txt', encoding='utf-8') as file:
+        send_mess = file.read()
+
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
+@bot.message_handler()
+def choise2(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    btn = types.InlineKeyboardButton('Назад', callback_data="yes")
+    markup.add(btn)
+    with open('../texts/accelerator_competition.txt', encoding='utf-8') as file:
+        send_mess = file.read()
+
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -32,6 +76,14 @@ def callback_inline(call):
         about(call.message)
     elif call.data == 'choise6':
         choise6(call.message)
+    elif call.data == 'choise5':
+        choise5(call.message)
+    elif call.data == 'choise4':
+        choise4(call.message)
+    elif call.data == 'choise3':
+        choise3(call.message)
+    elif call.data == 'choise2':
+        choise2(call.message)
 
 
 @bot.message_handler(commands=['about'])
