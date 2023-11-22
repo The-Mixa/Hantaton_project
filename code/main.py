@@ -42,7 +42,7 @@ def choise4(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
-    with open('../texts/residents_competition.txt', encoding='utf-8') as file:
+    with open('../texts/accelerator_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
@@ -53,7 +53,7 @@ def choise3(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
-    with open('../texts/public_services.txt', encoding='utf-8') as file:
+    with open('../texts/residents_competition.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
@@ -64,7 +64,7 @@ def choise2(message):
     markup.row_width = 1
     btn = types.InlineKeyboardButton('Назад', callback_data="yes")
     markup.add(btn)
-    with open('../texts/accelerator_competition.txt', encoding='utf-8') as file:
+    with open('../texts/public_services.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
