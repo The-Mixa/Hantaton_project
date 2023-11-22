@@ -8,14 +8,6 @@ class GetInfo:
             self.closest_events()
         elif number_of_function == '2':
             self.services()
-        elif number_of_function == '3':
-            self.how_to_be_a_resident()
-        elif number_of_function == '4':
-            pass
-        elif number_of_function == '5':
-            pass
-        elif number_of_function == '6':
-            pass
 
     def closest_events(self):
         events = ['']
@@ -47,24 +39,3 @@ class GetInfo:
             service_info_url = el['href']
             print(name_of_service)
             print(f'https://www.tp86.ru{service_info_url}', end='\n\n')
-
-    def how_to_be_a_resident(self):
-        print('Как стать резидентом?')
-        print('Всего пять шагов!')
-        print('1)Сформулировать идею и заполнить анкету')
-        print('2)Подать заявку в Технопарк на проведение экспертизы проекта')
-        print('3)Получить положительное заключение на проект и направить заявление на получение статуса резидента*')
-        print('4)Успешно защитить свой проект на заседании Экспертной комиссии')
-        print('5)Подписать договор о предоставлении статуса резидента Технопарка', end='\n\n')
-        print('*При соблюдении условий, указанных в Положении о резидентной политике')
-        print('Скачать анкету: https://www.tp86.ru/upload/medialibrary/588/9vp1xwgvz29gk1siueugb9qi5p2h3cr5/zayavlenie-proektnaya-initsiativa.docx')
-        print('Подробнее: https://www.tp86.ru/residents/add/')
-
-    def accelerator_of_technological_startups_competition(self):
-        pass
-
-    def umnik_competition(self):
-        pass
-
-    def young_developer_competition(self):
-        pass
