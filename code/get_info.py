@@ -73,7 +73,7 @@ class GetInfo:
             text = paragraph.text.strip()
             finish_news += f'{text}\n'
 
-        finish_news += (f'Если заинтересовала новость, то можете прочитать её полностью на [оффициальном сайте]'
+        finish_news += (f'\nЕсли заинтересовала новость, то можете прочитать её полностью на [оффициальном сайте]'
                         f'({href})')
 
         with open('../texts/relevant_news.txt', 'w', encoding='utf8') as f:
