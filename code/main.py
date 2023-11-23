@@ -134,28 +134,29 @@ def about(message):
 
 @bot.message_handler(content_types=['text'], func=lambda call: True)
 def commands(message):
-    # В боте напишите слово "новости", чтобы запустить автопостинг (в разработке: включение и выключение автопостинга)
-    if message.text.lower() == "новости":
-        while True:
-            # Получаем старый текстовый файл с новостью, перед обновлением
-            old_news = open('texts/relevant_news.txt', encoding='utf8')
-            old_text = ''.join(old_news.readlines())
+    while True:
+        # Получаем старый текстовый файл с новостью, перед обновлением
+        old_news = open('texts/relevant_news.txt', encoding='utf8')
+        old_text = ''.join(old_news.readlines())
 
-            # Обновляем текстовый файл: загружаем в него текст последней новости
-            GetInfo(3)
+        # Обновляем текстовый файл: загружаем в него текст последней новости
+        news = GetInfo(3)
+        if not news:
+            time.sleep(600)
+            continue
 
-            # Загружаем обновлённый текстовый файл, получаем из него текст:
-            update_news = open('texts/relevant_news.txt', encoding='utf8')
-            update_text = update_news.readlines()
+        # Загружаем обновлённый текстовый файл, получаем из него текст:
+        update_news = open('texts/relevant_news.txt', encoding='utf8')
+        update_text = update_news.readlines()
 
-            # Если новость обновилась:
-            if old_text != update_text:
-                link = update_text[0]
-                update_text = ''.join(update_text[1:])
-                bot.send_photo(channel_id, link, caption=update_text, parse_mode='Markdown')
+        # Если новость обновилась:
+        if old_text != update_text:
+            link = update_text[0]
+            update_text = ''.join(update_text[1:])
+            bot.send_photo(channel_id, link, caption=update_text, parse_mode='Markdown')
 
-            # Поиск новой новости (обновление) происходит каждый час
-            time.sleep(3600)
+        # Поиск новой новости (обновление) происходит каждый час
+        time.sleep(600)
 
 
 bot.polling(none_stop=True)

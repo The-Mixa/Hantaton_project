@@ -51,6 +51,25 @@ class GetInfo:
 
     def news(self):
         finish_news = ['']
+        amazing_news = False
+        amazing_words = {'рейтинг', 'конкурс', 'инновации', 'события', 'перспектива', 'участие', 'премия',
+                         'партнерство', 'технологии', 'отчетность', 'форум', 'обновление', 'проект', 'конференция',
+                         'победитель', 'развитие', 'встреча', 'тенденции', 'лидерство', 'успех', 'соревнование',
+                         'трансформация', 'мероприятие', 'активность', 'достижение', 'перспективный', 'инновационный',
+                         'контакт', 'спонсорство', 'улучшение', 'акция', 'фестиваль', 'партнер', 'эксперт', 'прорыв',
+                         'процесс', 'инициатива', 'опыт', 'организация', 'участник', 'кооперация', 'открытие',
+                         'бизнес-форум', 'совещание', 'интеграция', 'развитие бизнеса', 'партнерская программа',
+                         'интегратор', 'соревновательный', 'тематический', 'продвижение', 'активность',
+                         'инновационный проект', 'участник конкурса', 'бизнес-событие', 'конкурентоспособность',
+                         'творческий конкурс', 'профессиональный рост', 'интеллектуальный', 'компетентность',
+                         'индустриальный', 'современный', 'технологический', 'эксперимент', 'проработка', 'семинар',
+                         'коллаборация', 'награда', 'творчество', 'источник', 'предпринимательство', 'саморазвитие',
+                         'профессиональное сообщество', 'экспертный подход', 'компетитивный', 'совместная работа',
+                         'инициативность', 'прогресс', 'спонсор', 'мастер-класс', 'корпоративный', 'координация',
+                         'вдохновение', 'креативность', 'обучение', 'культурный', 'стартап', 'сборище', 'молодежный',
+                         'инвестиция', 'интеллектуальный рост', 'ресурсный', 'лидерский потенциал',
+                         'интеллектуальная собственность', 'промоушен', 'новаторство', 'амбициозный', 'достижения',
+                         'самореализация', 'партнерский проект'}
 
         response_all_news = requests.get('https://www.tp86.ru/press-centr/news/')
         soup_all_news = BeautifulSoup(response_all_news.text, 'html.parser')
@@ -68,14 +87,22 @@ class GetInfo:
         name = name[0].text.strip()
         finish_news += f'*{name}*\n\n'
 
-        paragraphs_find = soup_news.find('div', class_='mb-40 news-detail__block line-height-200').find('div', class_='news-detail__block_text line-height-200').findAll('p')
-        for paragraph in paragraphs_find[1:4]:
+        paragraphs_find = soup_news.find('div', class_='mb-40 news-detail__block line-height-200')
+        paragraphs_find = paragraphs_find.find('div', class_='news-detail__block_text line-height-200').findAll('p')
+        for i, paragraph in enumerate(paragraphs_find)[1:]:
             text = paragraph.text.strip()
-            finish_news += f'{text}\n'
+            if not amazing_news:
+                if len(set(text.split()).intersection(amazing_words)):
+                    amazing_news = True
+
+            if i < 4:
+                finish_news += f'{text}\n'
 
         finish_news += (f'\nЕсли заинтересовала новость, то можете прочитать её полностью на [оффициальном сайте]'
                         f'({href})')
-
-        with open('texts/relevant_news.txt', 'w', encoding='utf8') as f:
-            for line in finish_news:
-                f.write(line)
+        if amazing_news:
+            with open('texts/relevant_news.txt', 'w', encoding='utf8') as f:
+                for line in finish_news:
+                    f.write(line)
+            return True
+        return False
