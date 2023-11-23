@@ -4,6 +4,7 @@ from get_info import GetInfo
 import time
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
+channel_id = "@test_channel_Saltykov_detachment"
 
 
 @bot.message_handler(commands=['start'])
@@ -133,7 +134,6 @@ def about(message):
 
 @bot.message_handler(content_types=['text'], func=lambda call: True)
 def commands(message):
-    channel_id = "@test_channel_Saltykov_detachment"
     # В боте напишите слово "новости", чтобы запустить автопостинг (в разработке: включение и выключение автопостинга)
     if message.text.lower() == "новости":
         while True:
