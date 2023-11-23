@@ -23,9 +23,8 @@ class GetInfo:
             text = el.find('p', class_='prew-text text-color-black font-myriad-pro-weight-600 font-size-24 '
                                        'text-color-dark-purple events__list_item_prew-text').text.strip()
             more_info_url = el['href']
-            event += date + ' ' + month + '\n'
-            event += text + '\n'
-            event += f'https://www.tp86.ru{more_info_url}' + '\n\n'
+            event += f'{date} {month}\n'
+            event += f'[{text}](https://www.tp86.ru{more_info_url})\n\n'
             events += event
         with open('../texts/events.txt', 'w', encoding='utf8') as f:
             for event in events:
@@ -43,7 +42,7 @@ class GetInfo:
                                       class_='font-myriad-pro-weight-400 text-color-black font-size-17').text.strip()
             service_info_url = el['href']
             service += name_of_service + '\n'
-            service += f'https://www.tp86.ru{service_info_url}\n\n'
+            service += f'[перейти]https://www.tp86.ru{service_info_url}\n\n'
             services += service
         with open('../texts/public_services.txt', 'w', encoding='utf8') as f:
             for service in services:
