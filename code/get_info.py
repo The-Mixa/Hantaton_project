@@ -77,6 +77,3 @@ class GetInfo:
         with open('../texts/relevant_news.txt', 'w', encoding='utf8') as f:
             for line in finish_news:
                 f.write(line)
-
-
-GetInfo(3)
