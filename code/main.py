@@ -4,7 +4,7 @@ from get_info import GetInfo
 import time
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
-channel_id = "@test_channel_Saltykov_detachment"
+channel_id = "@Technopark_of_Ugra"
 
 
 @bot.message_handler(commands=['start'])
