@@ -81,7 +81,7 @@ def choise2(message):
     with open('../texts/public_services.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
-    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup, disable_web_page_preview=True)
 
 
 @bot.message_handler()
@@ -95,7 +95,7 @@ def choise1(message):
     with open('../texts/events.txt', encoding='utf-8') as file:
         send_mess = file.read()
 
-    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup, disable_web_page_preview=True)
 
 
 @bot.callback_query_handler(func=lambda call: True)
