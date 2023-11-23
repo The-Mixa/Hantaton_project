@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from get_info import GetInfo
-
+import time
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
 
@@ -29,6 +29,7 @@ def choise6(message):
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
+
 @bot.message_handler()
 def choise5(message):
     markup = types.InlineKeyboardMarkup()
@@ -40,6 +41,7 @@ def choise5(message):
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 
 @bot.message_handler()
 def choise4(message):
@@ -53,6 +55,7 @@ def choise4(message):
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
+
 @bot.message_handler()
 def choise3(message):
     markup = types.InlineKeyboardMarkup()
@@ -64,6 +67,7 @@ def choise3(message):
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 
 @bot.message_handler()
 def choise2(message):
@@ -91,6 +95,7 @@ def choise1(message):
         send_mess = file.read()
 
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -124,6 +129,33 @@ def about(message):
 
     send_mess = f"Что Вас интересует?"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
+
+
+@bot.message_handler(content_types=['text'], func=lambda call: True)
+def commands(message):
+    channel_id = "@test_channel_Saltykov_detachment"
+    # В боте напишите слово "новости", чтобы запустить автопостинг (в разработке: включение и выключение автопостинга)
+    if message.text.lower() == "новости":
+        while True:
+            # Получаем старый текстовый файл с новостью, перед обновлением
+            old_news = open('texts/relevant_news.txt', encoding='utf8')
+            old_text = ''.join(old_news.readlines())
+
+            # Обновляем текстовый файл: загружаем в него текст последней новости
+            GetInfo(3)
+
+            # Загружаем обновлённый текстовый файл, получаем из него текст:
+            update_news = open('texts/relevant_news.txt', encoding='utf8')
+            update_text = update_news.readlines()
+
+            # Если новость обновилась:
+            if old_text != update_text:
+                link = update_text[0]
+                update_text = ''.join(update_text[1:])
+                bot.send_photo(channel_id, link, caption=update_text, parse_mode='Markdown')
+
+            # Поиск новой новости (обновление) происходит каждый час
+            time.sleep(3600)
 
 
 bot.polling(none_stop=True)
