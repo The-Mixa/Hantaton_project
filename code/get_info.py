@@ -56,11 +56,13 @@ class GetInfo:
         soup_all_news = BeautifulSoup(response_all_news.text, 'html.parser')
         all_news = soup_all_news.find('a', class_='news-element news__list_item')
 
-        img_src = all_news.find('img')['src']
         href = 'https://www.tp86.ru' + all_news['href']
+        img_src = 'https://www.tp86.ru' + all_news.find('img')['src']
+        finish_news += f'{img_src}\n'
 
         response_news = requests.get(href)
         soup_news = BeautifulSoup(response_news.text, 'html.parser')
+
         name = soup_news.findAll('h2', class_='uppercase mb-40 container-p-adaptive')
 
         name = name[0].text.strip()
@@ -77,3 +79,5 @@ class GetInfo:
         with open('../texts/relevant_news.txt', 'w', encoding='utf8') as f:
             for line in finish_news:
                 f.write(line)
+
+GetInfo(3)
