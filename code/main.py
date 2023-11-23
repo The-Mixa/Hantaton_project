@@ -5,6 +5,35 @@ import time
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
 channel_id = "@Technopark_of_Ugra"
+AUTOPOST_IS_ON = True
+LOGIN_PROCESS = False
+PASSWORD = 'UgraTecnoPark'
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    global LOGIN_PROCESS, AUTOPOST_IS_ON
+    if LOGIN_PROCESS:
+        login(call.message)
+    elif call.data == 'yes':
+        about(call.message)
+    elif call.data == 'choise6':
+        choise6(call.message)
+    elif call.data == 'choise5':
+        choise5(call.message)
+    elif call.data == 'choise4':
+        choise4(call.message)
+    elif call.data == 'choise3':
+        choise3(call.message)
+    elif call.data == 'choise2':
+        choise2(call.message)
+    elif call.data == 'choise1':
+        choise1(call.message)
+    elif call.data == 'change_autopost':
+        if AUTOPOST_IS_ON:
+            AUTOPOST_IS_ON = False
+        else:
+            AUTOPOST_IS_ON = True
 
 
 @bot.message_handler(commands=['start'])
@@ -102,24 +131,6 @@ def choise1(message):
                      disable_web_page_preview=True)
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def callback_inline(call):
-    if call.data == 'yes':
-        about(call.message)
-    elif call.data == 'choise6':
-        choise6(call.message)
-    elif call.data == 'choise5':
-        choise5(call.message)
-    elif call.data == 'choise4':
-        choise4(call.message)
-    elif call.data == 'choise3':
-        choise3(call.message)
-    elif call.data == 'choise2':
-        choise2(call.message)
-    elif call.data == 'choise1':
-        choise1(call.message)
-
-
 @bot.message_handler(commands=['about'])
 def about(message):
     markup = types.InlineKeyboardMarkup()
@@ -149,6 +160,7 @@ def commands():
             time.sleep(600)
             continue
 
+
         # Загружаем обновлённый текстовый файл, получаем из него текст:
         update_news = open('texts/relevant_news.txt', encoding='utf8')
         update_text = update_news.readlines()
@@ -161,6 +173,41 @@ def commands():
 
         # Поиск новой новости (обновление) происходит каждый час
         time.sleep(600)
+
+
+@bot.message_handler(commands=['admin'])
+def admin(message):
+    global LOGIN_PROCESS
+
+    LOGIN_PROCESS = True
+    bot.send_message(message.chat.id, 'Введите пароль', parse_mode='html')
+
+
+@bot.message_handler()
+def login(message):
+    global AUTOPOST_IS_ON
+    if message == PASSWORD:
+        markup = types.InlineKeyboardMarkup()
+        markup.row_width = 1
+
+        if AUTOPOST_IS_ON:
+            text = 'Выключить автопостинг'
+        else:
+            text = 'Включить автопостинг'
+
+        btn = types.InlineKeyboardButton(text, callback_data="change_autopost")
+        markup.add(btn)
+
+        bot.send_message(message.chat.id, 'Пароль верный! У вас есть возможность поменять ре'
+                                          'жим работы автопостинга', parse_mode='html', reply_markup=markup)
+
+    else:
+        markup = types.InlineKeyboardMarkup()
+        markup.row_width = 1
+        btn = types.InlineKeyboardButton('Отмена', callback_data="yes")
+        markup.add(btn)
+
+        bot.send_message(message.chat.id, 'Неверный пароль, попробуйте ещё раз', parse_mode='html', reply_markup=markup)
 
 
 bot.polling(none_stop=True)
