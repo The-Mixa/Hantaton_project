@@ -66,7 +66,7 @@ class GetInfo:
         name = soup_news.findAll('h2', class_='uppercase mb-40 container-p-adaptive')
 
         name = name[0].text.strip()
-        finish_news += f'*{name}*\n'
+        finish_news += f'*{name}*\n\n'
 
         paragraphs_find = soup_news.find('div', class_='mb-40 news-detail__block line-height-200').find('div', class_='news-detail__block_text line-height-200').findAll('p')
         for paragraph in paragraphs_find[1:4]:
