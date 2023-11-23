@@ -42,7 +42,7 @@ class GetInfo:
                                       class_='font-myriad-pro-weight-400 text-color-black font-size-17').text.strip()
             service_info_url = el['href']
             service += name_of_service + '\n'
-            service += f'[перейти]https://www.tp86.ru{service_info_url}\n\n'
+            service += f'[перейти](https://www.tp86.ru{service_info_url})\n\n'
             services += service
         with open('../texts/public_services.txt', 'w', encoding='utf8') as f:
             for service in services:
