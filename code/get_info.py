@@ -1,5 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
+import requests
+import telebot
+import time  # Для установления интервала поиска новостей
 
 
 class GetInfo:
@@ -76,6 +78,41 @@ class GetInfo:
         finish_news += (f'\nЕсли заинтересовала новость, то можете прочитать её полностью на [оффициальном сайте]'
                         f'({href})')
 
-        with open('../texts/relevant_news.txt', 'w', encoding='utf8') as f:
+        with open('texts/relevant_news.txt', 'w', encoding='utf8') as f:
             for line in finish_news:
                 f.write(line)
+
+
+token = "6782187653:AAGWOHdpCi-Uw4yGTjcKXAXcrmKdAxrYU94"  # Токен бота (ИСПОЛЬЗУЕТСЯ ТОКЕН ТЕСТОВОГО БОТА)
+channel_id = "@test_channel_Saltykov_detachment"  # ID канала (ИСПОЛЬЗУЕТСЯ ID ТЕСТОВОГО КАНАЛА)
+bot = telebot.TeleBot(token)
+
+
+#  Необходимо сделать бота администратором канала, чтобы он мог автоматически постить новости
+@bot.message_handler(content_types=['text'])
+def commands(message):
+    # В боте напишите слово "новости", чтобы запустить автопостинг (в разработке: включение и выключение автопостинга)
+    if message.text.lower() == "новости":
+        while True:
+            # Получаем старый текстовый файл с новостью, перед обновлением
+            old_news = open('texts/relevant_news.txt', encoding='utf8')
+            old_text = ''.join(old_news.readlines())
+
+            # Обновляем текстовый файл: загружаем в него текст последней новости
+            GetInfo(3)
+
+            # Загружаем обновлённый текстовый файл, получаем из него текст:
+            update_news = open('texts/relevant_news.txt', encoding='utf8')
+            update_text = update_news.readlines()
+
+            # Если новость обновилась:
+            if old_text != update_text:
+                link = update_text[0]
+                update_text = ''.join(update_text[1:])
+                bot.send_photo(channel_id, link, caption=update_text, parse_mode='Markdown')
+
+            # Поиск новой новости (обновление) происходит каждый час
+            time.sleep(3600)
+
+
+bot.polling()
