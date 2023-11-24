@@ -16,8 +16,8 @@ def check_password(message):
     markup.row_width = 1
 
     if message.text == PASSWORD:
-        btn = types.InlineKeyboardButton('Включить автопостинг', callback_data="on_autopost")
-        btn1 = types.InlineKeyboardButton('Выключить автопостинг', callback_data='off_autopost')
+        btn = types.InlineKeyboardButton('Включить автопостинг ✅', callback_data="on_autopost")
+        btn1 = types.InlineKeyboardButton('Выключить автопостинг ❌', callback_data='off_autopost')
         markup.add(btn)
         markup.add(btn1)
 
@@ -96,7 +96,6 @@ def choise2(message):
     GetInfo(2)
     with open('../texts/public_services.txt', encoding='utf-8') as file:
         send_mess = file.read()
-        print(send_mess)
 
     bot.send_message(message.chat.id, send_mess, parse_mode='Markdown', reply_markup=markup,
                      disable_web_page_preview=True)
