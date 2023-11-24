@@ -21,8 +21,8 @@ def check_password(message):
         markup.add(btn)
         markup.add(btn1)
 
-        bot.send_message(message.chat.id, 'Успешный вход! Теперь вам доступна возможность включения/выключения '
-                                          'автопостинга:', parse_mode='html', reply_markup=markup)
+        bot.send_message(message.chat.id, '*Успешный вход! Теперь вам доступна возможность включения/выключения '
+                                          'автопостинга:*', parse_mode='Markdown', reply_markup=markup)
 
     else:
         btn = types.InlineKeyboardButton('Назад', callback_data='yes')
@@ -96,6 +96,7 @@ def choise2(message):
     GetInfo(2)
     with open('../texts/public_services.txt', encoding='utf-8') as file:
         send_mess = file.read()
+        print(send_mess)
 
     bot.send_message(message.chat.id, send_mess, parse_mode='Markdown', reply_markup=markup,
                      disable_web_page_preview=True)
@@ -188,7 +189,6 @@ def callback_inline(call):
 @bot.message_handler(func=lambda call: True)
 def commands(message):
     while True:
-
         if not AUTOPOST_IS_ON:
             return
 

@@ -12,7 +12,7 @@ class GetInfo:
             self.news()
 
     def closest_events(self):
-        events = ['']
+        events = ['*Ближайшие мероприятия:*\n\n']
         response = requests.get('https://www.tp86.ru/press-centr/events/')
         soup = BeautifulSoup(response.text, 'html.parser')
         data = soup.findAll('a', class_='grid events__list_item')
@@ -23,7 +23,7 @@ class GetInfo:
             text = el.find('p', class_='prew-text text-color-black font-myriad-pro-weight-600 font-size-24 '
                                        'text-color-dark-purple events__list_item_prew-text').text.strip()
             more_info_url = el['href']
-            event += f'{date} {month}\n'
+            event += f'*{date} {month}*\n'
             event += f'[{text}](https://www.tp86.ru{more_info_url})\n\n'
             events += event
         with open('../texts/events.txt', 'w', encoding='utf8') as f:
@@ -31,7 +31,7 @@ class GetInfo:
                 f.write(event)
 
     def services(self):
-        services = ['']
+        services = ['*Перечень доступных государственных услуг:*\n\n']
         response = requests.get('https://www.tp86.ru/services/services/')
         soup = BeautifulSoup(response.text, 'html.parser')
         data = soup.findAll('a', class_='service-element bg-color-full-white')
@@ -40,9 +40,10 @@ class GetInfo:
             service = ''
             name_of_service = el.find('p',
                                       class_='font-myriad-pro-weight-400 text-color-black font-size-17').text.strip()
+            name_of_service = '*• ' + name_of_service + '*'
             service_info_url = el['href']
             service += name_of_service + '\n'
-            service += f'[перейти](https://www.tp86.ru{service_info_url})\n\n'
+            service += f'  [Перейти](https://www.tp86.ru{service_info_url})\n\n'
             services += service
         with open('../texts/public_services.txt', 'w', encoding='utf8') as f:
             for service in services:
@@ -85,7 +86,6 @@ class GetInfo:
 
         name = name[0].text.strip()
         finish_news += f'*{name}*\n\n'
-
         paragraphs_find = soup_news.find('div', class_='mb-40 news-detail__block line-height-200')
         paragraphs_find = paragraphs_find.find('div', class_='news-detail__block_text line-height-200').findAll('p')
         for i, paragraph in list(enumerate(paragraphs_find))[1:]:
