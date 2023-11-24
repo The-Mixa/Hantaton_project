@@ -88,7 +88,7 @@ class GetInfo:
 
         paragraphs_find = soup_news.find('div', class_='mb-40 news-detail__block line-height-200')
         paragraphs_find = paragraphs_find.find('div', class_='news-detail__block_text line-height-200').findAll('p')
-        for i, paragraph in enumerate(paragraphs_find)[1:]:
+        for i, paragraph in list(enumerate(paragraphs_find))[1:]:
             text = paragraph.text.strip()
             if not amazing_news:
                 if len(set(text.split()).intersection(amazing_words)):
@@ -97,7 +97,7 @@ class GetInfo:
             if i < 4:
                 finish_news += f'{text}\n'
 
-        finish_news += (f'\nЕсли заинтересовала новость, то можете прочитать её полностью на [оффициальном сайте]'
+        finish_news += (f'\nПолная версия новостной статьи доступна на [официальном сайте]'
                         f'({href})')
         if amazing_news:
             with open('texts/relevant_news.txt', 'w', encoding='utf8') as f:

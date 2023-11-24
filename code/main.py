@@ -5,7 +5,7 @@ import time
 
 
 bot = telebot.TeleBot('6627972348:AAELm5jh-LOE_MYq8mrd-FATGzOQmWqEHc8')
-channel_id = "@test_channel_Saltykov_detachment"
+channel_id = "@test_channel_Saltykov_detachment"  # ID ТЕСТОВОГО КАНАЛА (ИЗМЕНИТЬ ПЕРЕД ОТПРАВКОЙ??)
 
 
 @bot.message_handler(commands=['start'])
@@ -157,16 +157,16 @@ def commands(message):
 
         # Загружаем обновлённый текстовый файл, получаем из него текст:
         update_news = open('../texts/relevant_news.txt', encoding='utf8')
-        update_text = update_news.readlines()
+        update_list = update_news.readlines()
 
         # Если новость обновилась:
-        if old_text != update_text:
-            link = update_text[0]
-            update_text = ''.join(update_text[1:])
+        if old_text != ''.join(update_list):
+            link = update_list[0]
+            update_text = ''.join(update_list[1:])
             bot.send_photo(channel_id, link, caption=update_text, parse_mode='Markdown')
 
         # Поиск новой новости (обновление) происходит каждый час
-        time.sleep(600)
+        time.sleep(3600)
 
 
 bot.polling(none_stop=True)
