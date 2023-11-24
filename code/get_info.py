@@ -100,7 +100,7 @@ class GetInfo:
         finish_news += (f'\nПолная версия новостной статьи доступна на [официальном сайте]'
                         f'({href})')
         if amazing_news:
-            with open('texts/relevant_news.txt', 'w', encoding='utf8') as f:
+            with open('../texts/relevant_news.txt', 'w', encoding='utf8') as f:
                 for line in finish_news:
                     f.write(line)
             return True
